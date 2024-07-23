@@ -4,9 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from consultas.models import Paciente, Atendimento
+from consultas.forms import PacienteForm
 
-
-# Create your views here.
 
 def teste(request):
     return HttpResponse("Aula Dev 1")
@@ -80,3 +79,16 @@ def delete(request, paciente_id):
         contexto = {}
         print(e)
         return render(request, "consultas/pacientes.html", contexto)
+
+def create(request):
+    if request.method == 'POST':
+        form = PacienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('consultas:pacientes')
+    else:
+        form = PacienteForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'consultas/create_paciente.html', context)
