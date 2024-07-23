@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+    {% if pacientes %}
+        <h2>Paciente:</h2>
+
+        {% for paciente in pacientes %}
+            <p>{{ paciente.id }} - {{ paciente.nome }}</p>
+            <a class="btn btn-secondary btn-lg" role="button"
+            href="{% url 'consultas:read_paciente' paciente.id %}">Detalhar</a>
+        {% endfor %}
+
+    {% endif %}
+
+    <div>
+
+    <a class="btn btn-success btn-lg" role="button"
+            href="{% url 'consultas:create_paciente' %}">Novo Paciente</a>
+
+{% endblock conteudo %}
