@@ -48,7 +48,6 @@ class Paciente(BaseModel):
         else:
             return TypeError("O dado informado não é do tipo Date")
 
-    #não consigo testar
     def pacientes_por_alergia(alergia: tipo_alergia):
         if isinstance(alergia, TipoAlergia):
             return [Paciente.objects.get(tipo_alergia=alergia)]

@@ -12,13 +12,8 @@
     <h3>Nome do Contato: </h3>{{ paciente.nome_contato }}
     <h3>Parentesco: </h3>{{ paciente.parentesco }}
     <p></p>
-    <a class="btn btn-light btn-lg" role="button"
+
+    <a class="btn btn-dark btn-lg" role="button"
             href="{% url 'consultas:pacientes' %}">Voltar</a>
-
-    <a class="btn btn-light btn-lg" role="button"
-                href="{% url 'consultas:delete_pacientes' paciente.id %}">Deletar</a>
-
-    <a class="btn btn-light btn-lg" role="button"
-                href="{% url 'consultas:update_pacientes' paciente.id %}">Editar</a>
 
 {% endblock conteudo %}

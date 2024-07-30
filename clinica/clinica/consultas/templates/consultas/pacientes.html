@@ -5,16 +5,27 @@
         <h2>Paciente:</h2>
 
         {% for paciente in pacientes %}
+            {% if perms.consultas.view_paciente %}
             <p>{{ paciente.id }} - {{ paciente.nome }}</p>
             <a class="btn btn-secondary btn-lg" role="button"
             href="{% url 'consultas:read_paciente' paciente.id %}">Detalhar</a>
+            {% endif %}
+            {% if perms.consultas.delete_paciente %}
+            <a class="btn btn-danger btn-lg" role="button"
+                href="{% url 'consultas:delete_pacientes' paciente.id %}">Deletar</a>
+            {% endif %}
+            {% if perms.consultas.change_paciente %}
+            <a class="btn btn-primary btn-lg" role="button"
+                href="{% url 'consultas:update_pacientes' paciente.id %}">Editar</a>
+            {% endif %}
         {% endfor %}
-
     {% endif %}
 
     <div>
-
+    <br>
+    {% if perms.consultas.add_paciente %}
     <a class="btn btn-success btn-lg" role="button"
             href="{% url 'consultas:create_paciente' %}">Novo Paciente</a>
+    {% endif %}
 
 {% endblock conteudo %}

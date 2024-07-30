@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
@@ -31,11 +32,8 @@ def parametro(request, nome):
     nome = nome.upper()
     return HttpResponse(f"<h1> Boa noite {nome} </h1>")
 
-
-def desafio(request, nome):
-    return HttpResponse(f"<h1> Quantidade de letras: {len(nome)} </h1>")
-
-
+@login_required
+@permission_required('consultas.view_paciente', raise_exception=True)
 def paciente(request, id):
     p1 = Paciente.objects.get(pk=id)
     contexto = {
@@ -44,7 +42,8 @@ def paciente(request, id):
 
     return render(request, "consultas/paciente.html", contexto)
 
-
+@login_required
+@permission_required('consultas.view_paciente', raise_exception=True)
 def list_pacientes(request):
     total = Paciente.objects.all().order_by("nome")
     contexto = {
@@ -61,7 +60,8 @@ def atendimento(request, id):
 
     return render(request, "consultas/atendimento.html", contexto)
 
-
+@login_required
+@permission_required('consultas.delete_paciente', raise_exception=True)
 def delete(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     try:
@@ -80,6 +80,8 @@ def delete(request, paciente_id):
         print(e)
         return render(request, "consultas/pacientes.html", contexto)
 
+@login_required
+@permission_required('consultas.change_paciente', raise_exception=True)
 def update(request, paciente_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     if request.method == 'POST':
@@ -95,6 +97,8 @@ def update(request, paciente_id):
     }
     return render(request, 'consultas/update_paciente.html', context)
 
+@login_required
+@permission_required('consultas.add_paciente', raise_exception=True)
 def create(request):
     if request.method == 'POST':
         form = PacienteForm(request.POST)
